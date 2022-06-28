@@ -23,9 +23,10 @@
         public function store()
         {
             //validate
-            $attributes = request()->validate(['title' => 'required', 'description' => 'required']);
-
-            Project::create($attributes);
+            auth()->user()->projects()->create(request()->validate([
+                'title' => 'required',
+                'description' => 'required',
+            ]));
 
             //redirect
             return redirect('/projects');
