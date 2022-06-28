@@ -10,14 +10,20 @@
 
         public function index()
         {
-            $projects = Project::all();
-
-            return view('projects.index', compact('projects'));
+            return view('projects.index', [
+                'projects' => auth()->user()->projects
+            ]);
         }
 
         public function show(Project $project)
         {
-            return view('projects.show', compact('project'));
+            if(auth()->user()->isNot($project->owner)) {
+                abort(403);
+            }
+
+            return view('projects.show', [
+                'project' => $project
+            ]);
         }
 
         public function store()
