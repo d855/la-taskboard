@@ -11,7 +11,7 @@
         public function index()
         {
             return view('projects.index', [
-                'projects' => auth()->user()->projects
+                'projects' => auth()->user()->projects->sortByDesc('updated_at')
             ]);
         }
 
