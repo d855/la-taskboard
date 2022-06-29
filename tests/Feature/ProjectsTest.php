@@ -22,6 +22,8 @@ class ProjectsTest extends TestCase
 
         $this->actingAs(User::factory()->create());
 
+        $this->get('/projects/create')->assertStatus(200);
+
         $attributes = [
             'title' => $this->faker->sentence(4),
             'description' => $this->faker->paragraph(5)
@@ -69,22 +71,13 @@ class ProjectsTest extends TestCase
         $this->get($project->path())->assertStatus(403);
     }
 
-    public function test_guests_cannot_create_projects()
-    {
-        $attributes = Project::factory()->raw();
-
-        $this->post('/projects', $attributes)->assertRedirect('login');
-    }
-
-    public function test_guests_cannot_view_projects()
-    {
-        $this->get('/projects')->assertRedirect('login');
-    }
-
-    public function test_guests_cannot_view_a_single_project()
+    public function test_guests_cannot_manage_projects()
     {
         $project = Project::factory()->create();
 
+        $this->post('/projects', $project->toArray())->assertRedirect('login');
+        $this->get('/projects/create', $project->toArray())->assertRedirect('login');
+        $this->get('/projects')->assertRedirect('login');
         $this->get($project->path())->assertRedirect('login');
     }
 }
