@@ -20,6 +20,6 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $user->assertInstanceOf(Collection::class, $user->projects);
+        $this->assertInstanceOf(Collection::class, $user->projects);
     }
 }

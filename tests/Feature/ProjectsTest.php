@@ -30,7 +30,8 @@
                 'description' => $this->faker->paragraph(5)
             ];
 
-            $this->post('/projects', $attributes)->assertRedirect('/projects');
+            $response = $this->post('/projects', $attributes);
+            $response->assertRedirect(Project::where($attributes)->first()->path());
 
             $this->assertDatabaseHas('projects', $attributes);
 
