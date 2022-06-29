@@ -9,6 +9,7 @@
     use App\Http\Controllers\Auth\RegisteredUserController;
     use App\Http\Controllers\Auth\VerifyEmailController;
     use App\Http\Controllers\ProjectsController;
+    use App\Http\Controllers\ProjectTasksController;
     use Illuminate\Support\Facades\Route;
 
     Route::middleware('guest')->group(function () {
@@ -52,5 +53,7 @@
         Route::get('/projects/create', [ProjectsController::class, 'create'])->name('projects.create');
         Route::get('/projects/{project}', [ProjectsController::class, 'show'])->name('projects.show');
         Route::post('/projects', [ProjectsController::class, 'store']);
+
+        Route::post('/projects/{project}/tasks', [ProjectTasksController::class, 'store']);
 
     });

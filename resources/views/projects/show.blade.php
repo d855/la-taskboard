@@ -16,18 +16,11 @@
 					{{-- tasks --}}
 
 					<div class="space-y-4">
-						<div class="bg-white rounded-lg shadow p-5 cursor-pointer hover:shadow-lg transition ease-in-out duration-250">
-							lorem
-						</div>
-						<div class="bg-white rounded-lg shadow p-5 cursor-pointer hover:shadow-lg transition ease-in-out duration-250">
-							lorem
-						</div>
-						<div class="bg-white rounded-lg shadow p-5 cursor-pointer hover:shadow-lg transition ease-in-out duration-250">
-							lorem
-						</div>
-						<div class="bg-white rounded-lg shadow p-5 cursor-pointer hover:shadow-lg transition ease-in-out duration-250">
-							lorem
-						</div>
+						@foreach($project->tasks as $task)
+							<div class="bg-white rounded-lg shadow p-5 cursor-pointer hover:shadow-lg transition ease-in-out duration-250">
+								{{ $task->body }}
+							</div>
+						@endforeach
 					</div>
 				</div>
 
