@@ -21,6 +21,15 @@
 								{{ $task->body }}
 							</div>
 						@endforeach
+						<div class="bg-white rounded-lg shadow p-5 cursor-pointer hover:shadow-lg transition ease-in-out duration-250">
+							<form method="POST" action="{{ $project->path() . '/tasks' }}">
+								@csrf
+								<input type="text"
+								       name="body"
+								       placeholder="Add new task..."
+								       class="w-full border-none focus:border-none">
+							</form>
+						</div>
 					</div>
 				</div>
 

@@ -34,13 +34,13 @@
         public function store()
         {
             //validate
-            auth()->user()->projects()->create(request()->validate([
+            $project = auth()->user()->projects()->create(request()->validate([
                 'title' => 'required',
                 'description' => 'required',
             ]));
 
             //redirect
-            return redirect('/projects');
+            return redirect($project->path());
         }
 
     }

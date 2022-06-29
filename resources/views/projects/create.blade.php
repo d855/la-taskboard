@@ -11,18 +11,18 @@
 		<h2>Create a project</h2>
 
 		<form action="/projects" method="POST">
-			@csrf
-			<!-- Title Form Input -->
+		@csrf
+		<!-- Title Form Input -->
 			<div class="mb-6">
 				<label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-				       for="Title"
+				       for="title"
 				>
 					Title:
 				</label>
 
-				<input id="Title"
+				<input id="title"
 				       class="border border-gray-400 p-2 w-full"
-				       name="Title"
+				       name="title"
 				       placeholder="Title"
 				       type="text"
 				>
@@ -37,8 +37,8 @@
 				</label>
 
 				<textarea id="description"
-				       class="border border-gray-400 p-2 w-full"
-				       name="description"
+				          class="border border-gray-400 p-2 w-full"
+				          name="description"
 				></textarea>
 			</div>
 
