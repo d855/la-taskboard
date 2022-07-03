@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

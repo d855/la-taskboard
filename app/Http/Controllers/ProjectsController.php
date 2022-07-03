@@ -30,16 +30,26 @@
         {
             return view('projects.create');
         }
-
+        
         public function store()
         {
             //validate
             $project = auth()->user()->projects()->create(request()->validate([
                 'title' => 'required',
-                'description' => 'required',
+                'description' => 'required|max:100',
+                'notes' => 'min:3'
             ]));
 
             //redirect
+            return redirect($project->path());
+        }
+
+        public function update(Project $project)
+        {
+            $project->update([
+                'notes' => request('notes')
+            ]);
+
             return redirect($project->path());
         }
 

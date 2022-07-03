@@ -27,15 +27,36 @@
 
             $attributes = [
                 'title' => $this->faker->sentence(4),
-                'description' => $this->faker->paragraph(5)
+                'description' => $this->faker->sentences(1, true),
+                'notes' => 'General notes here.'
             ];
 
             $response = $this->post('/projects', $attributes);
-            $response->assertRedirect(Project::where($attributes)->first()->path());
+
+            $project = Project::where($attributes)->first();
+
+            $response->assertRedirect($project->path());
 
             $this->assertDatabaseHas('projects', $attributes);
 
-            $this->get('/projects')->assertSee($attributes['title']);
+            $this->get($project->path())
+                 ->assertSee($attributes['title'])
+                 ->assertSee($attributes['description'])
+                 ->assertSee($attributes['notes']);
+        }
+
+        public function test_a_user_can_update_a_project()
+        {
+            $this->signIn();
+            $this->withoutExceptionHandling();
+            $project = Project::factory()->create(['owner_id' => auth()->id()]);
+
+            $this->patch($project->path(), [
+                'notes' => 'Changed'
+            ])->assertRedirect($project->path());
+
+            $this->assertDatabaseHas('projects', ['notes' => 'Changed']);
+
         }
 
         public function test_a_project_requires_a_title()

@@ -46,11 +46,15 @@
 					<h2 class="text-gray-400 text-lg font-semibold mb-3">General Notes</h2>
 					{{-- general notes--}}
 
-					<textarea id="genera_notes"
-					          name="general_notes"
-					          class="bg-white w-full rounded-lg text-base shadow p-5 cursor-pointer border-none hover:shadow-lg transition ease-in-out duration-250"
-					          style="min-height: 200px;">lorem
-					</textarea>
+					<form method="POST" action="{{ $project->path() }}">
+						@csrf
+						@method('PATCH')
+						<textarea id="notes"
+						          name="notes"
+						          class="bg-white w-full rounded-lg text-base mb-4 shadow p-5 cursor-pointer border-none hover:shadow-lg transition ease-in-out duration-250"
+						          style="min-height: 200px;">{{ $project->notes }}</textarea>
+						<button type="submit" class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ease-in-out duration-150">Save</button>
+					</form>
 				</div>
 			</div>
 
