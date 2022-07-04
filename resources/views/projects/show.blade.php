@@ -3,9 +3,8 @@
 		<p class="text-gray-400 font-semibold text-sm capitalize">
 			<a href="{{ route('projects') }}">My projects</a> / {{ $project->title }}
 		</p>
-		<a href="{{ route('projects.create') }}"
-		   class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ease-in-out duration-150">Add
-		                                                                                                                    project</a>
+		<a href="{{ route('projects.edit', $project) }}"
+		   class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ease-in-out duration-150">Edit Project</a>
 	</header>
 
 	<section>

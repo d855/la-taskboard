@@ -52,6 +52,7 @@
         Route::get('/projects', [ProjectsController::class, 'index'])->name('projects');
         Route::get('/projects/create', [ProjectsController::class, 'create'])->name('projects.create');
         Route::get('/projects/{project}', [ProjectsController::class, 'show'])->name('projects.show');
+        Route::get('/projects/{project}/edit', [ProjectsController::class, 'edit'])->name('projects.edit');
         Route::patch('/projects/{project}', [ProjectsController::class, 'update'])->name('projects.update');
         Route::post('/projects', [ProjectsController::class, 'store']);
 

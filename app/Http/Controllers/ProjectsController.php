@@ -44,11 +44,22 @@
             return redirect($project->path());
         }
 
+        public function edit(Project $project)
+        {
+            return view('projects.edit', [
+                'project' => $project
+            ]);
+        }
+
         public function update(Project $project)
         {
-            $project->update([
-                'notes' => request('notes')
+            $attributes = request()->validate([
+                'title' => 'required',
+                'description' => 'required',
+                'notes' => 'min:3'
             ]);
+
+            $project->update($attributes);
 
             return redirect($project->path());
         }
