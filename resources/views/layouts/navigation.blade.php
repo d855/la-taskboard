@@ -5,7 +5,7 @@
 			<div class="flex">
 				<!-- Logo -->
 				<div class="shrink-0 flex items-center">
-					<a href="/">{{ config('app.name') }}</a>
+					<a href="/projects">{{ config('app.name') }}</a>
 				</div>
 
 				<!-- Navigation Links -->

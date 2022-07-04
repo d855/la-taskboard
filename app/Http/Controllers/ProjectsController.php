@@ -17,7 +17,7 @@
 
         public function show(Project $project)
         {
-            if(auth()->user()->isNot($project->owner)) {
+            if (auth()->user()->isNot($project->owner)) {
                 abort(403);
             }
 
@@ -30,17 +30,15 @@
         {
             return view('projects.create');
         }
-        
+
         public function store()
         {
-            //validate
             $project = auth()->user()->projects()->create(request()->validate([
                 'title' => 'required',
                 'description' => 'required|max:100',
                 'notes' => 'min:3'
             ]));
 
-            //redirect
             return redirect($project->path());
         }
 
@@ -54,9 +52,9 @@
         public function update(Project $project)
         {
             $attributes = request()->validate([
-                'title' => 'required',
-                'description' => 'required',
-                'notes' => 'min:3'
+                'title' => 'sometimes|required',
+                'description' => 'sometimes|required',
+                'notes' => 'nullable'
             ]);
 
             $project->update($attributes);
