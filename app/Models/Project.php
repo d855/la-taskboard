@@ -33,16 +33,23 @@ class Project extends Model
         ]);
     }
 
+    /**
+     * The activity feed for the project
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function activity()
     {
         return $this->hasMany(Activity::class);
     }
 
-    public function recordActivity($type)
+    /**
+     * Record activity for a project
+     *
+     * @param string $description
+     */
+    public function recordActivity(string $description)
     {
-        Activity::create([
-            'project_id' => $this->id,
-            'description' => $type
-        ]);
+        $this->activity()->create(['description' => $description]);
     }
 }

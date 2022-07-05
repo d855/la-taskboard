@@ -73,12 +73,57 @@ class ProjectTasks extends TestCase
         $task = $project->addTask('test Task');
         $this->patch($project->path() . '/tasks/' . $task->id, [
             'body' => 'changed',
+        ]);
+
+        $this->assertDatabaseHas('tasks', [
+            'body' => 'changed',
+        ]);
+    }
+
+    public function test_task_can_be_completed()
+    {
+        $this->withoutExceptionHandling();
+        $this->signIn();
+
+        $project = auth()->user()->projects()->create(
+            Project::factory()->raw()
+        );
+
+        $task = $project->addTask('test Task');
+        $this->patch($project->path() . '/tasks/' . $task->id, [
+            'body' => 'changed',
             'completed' => true
         ]);
 
         $this->assertDatabaseHas('tasks', [
             'body' => 'changed',
             'completed' => true
+        ]);
+    }
+
+    public function test_task_can_be_marked_as_incomplete()
+    {
+        $this->withoutExceptionHandling();
+        $this->signIn();
+
+        $project = auth()->user()->projects()->create(
+            Project::factory()->raw()
+        );
+        $task = $project->addTask('test Task');
+
+        $this->actingAs($project->owner)->patch($project->tasks[0]->path(), [
+            'body' => 'changed',
+            'completed' => true
+        ]);
+
+        $this->patch($project->tasks[0]->path(), [
+            'body' => 'changed',
+            'completed' => false,
+        ]);
+
+        $this->assertDatabaseHas('tasks', [
+            'body' => 'changed',
+            'completed' => false,
         ]);
     }
 }
