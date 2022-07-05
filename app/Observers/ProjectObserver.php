@@ -16,26 +16,11 @@
          */
         public function created(Project $project)
         {
-            $this->recordActivity($project, 'created');
+            $project->recordActivity('created');
         }
 
-        /**
-         * Handle the Project "updated" event.
-         *
-         * @param \App\Models\Project $project
-         * @return void
-         */
         public function updated(Project $project)
         {
-            $this->recordActivity($project, 'updated');
+            $project->recordActivity('updated');
         }
-
-        protected function recordActivity($project, $type)
-        {
-            Activity::create([
-                'project_id' => $project->id,
-                'description' => $type
-            ]);
-        }
-
     }

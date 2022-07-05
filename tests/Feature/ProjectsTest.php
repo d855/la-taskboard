@@ -87,7 +87,7 @@
 
             $project = Project::factory()->create(['owner_id' => auth()->id()]);
 
-            $this->get($project->path())->assertSee($project->title)->assertSee($project->description);
+            $this->get($project->path())->assertSee($project->title);
         }
 
         public function test_an_authenticated_user_cannot_view_the_projects_of_others()
