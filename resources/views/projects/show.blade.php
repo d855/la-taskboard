@@ -4,7 +4,8 @@
 			<a href="{{ route('projects') }}">My projects</a> / {{ $project->title }}
 		</p>
 		<a href="{{ route('projects.edit', $project) }}"
-		   class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ease-in-out duration-150">Edit Project</a>
+		   class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ease-in-out duration-150">Edit
+		                                                                                                                    Project</a>
 	</header>
 
 	<section>
@@ -25,7 +26,10 @@
 										       type="text"
 										       value="{{ $task->body }}"
 										       class="w-full border-none focus:border-none {{ $task->completed ? 'text-gray-400' : '' }}">
-										<input name="completed" type="checkbox" onChange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}></div>
+										<input name="completed"
+										       type="checkbox"
+										       onChange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}>
+									</div>
 								</form>
 							</div>
 						@endforeach
@@ -52,13 +56,27 @@
 						          name="notes"
 						          class="bg-white w-full rounded-lg text-base mb-4 shadow p-5 cursor-pointer border-none hover:shadow-lg transition ease-in-out duration-250"
 						          style="min-height: 200px;">{{ $project->notes }}</textarea>
-						<button type="submit" class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ease-in-out duration-150">Save</button>
+						<button type="submit"
+						        class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ease-in-out duration-150">
+							Save
+						</button>
 					</form>
 				</div>
 			</div>
 
 			<div class="lg:w-1/4">
 				@include('projects.card')
+
+				<div class="bg-white rounded-lg shadow p-5 cursor-pointer hover:shadow-lg transition ease-in-out duration-250 mt-3">
+					<ul class="text-sm space-y-1">
+						@foreach($project->activity as $activity)
+							<li class="font-semibold">
+								@include("projects.activity.{$activity->description}")
+								<span class="text-gray-500 text-xs">{{ $activity->created_at->diffForHumans(null, true) }}</span>
+							</li>
+						@endforeach
+					</ul>
+				</div>
 			</div>
 		</div>
 	</section>
