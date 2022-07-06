@@ -1,1 +1,1 @@
-You created a task
+You created <span class="font-semibold text-blue-500">{{ $activity->subject->body }}</span>

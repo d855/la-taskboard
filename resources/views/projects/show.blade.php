@@ -70,7 +70,7 @@
 				<div class="bg-white rounded-lg shadow p-5 cursor-pointer hover:shadow-lg transition ease-in-out duration-250 mt-3">
 					<ul class="text-sm space-y-1">
 						@foreach($project->activity as $activity)
-							<li class="font-semibold">
+							<li>
 								@include("projects.activity.{$activity->description}")
 								<span class="text-gray-500 text-xs">{{ $activity->created_at->diffForHumans(null, true) }}</span>
 							</li>
