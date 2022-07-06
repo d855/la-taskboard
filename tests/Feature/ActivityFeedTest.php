@@ -26,10 +26,22 @@ class ActivityFeedTest extends TestCase
     public function test_updating_a_project_generates_activity()
     {
         $project = Project::factory()->create();
+        $originalTitle = $project->title;
+
         $project->update(['title' => 'Changed']);
 
         $this->assertCount(2, $project->activity);
-        $this->assertEquals('updated', $project->activity->last()->description);
+
+        tap($project->activity->last(), function ($activity) use ($originalTitle){
+            $this->assertEquals('updated', $activity->description);
+
+            $expected = [
+                'before' => ['title' => $originalTitle],
+                'after' => ['title' => 'Changed']
+            ];
+
+            $this->assertEquals($expected, $activity->changes);
+        });
     }
 
     public function test_a_new_task_records_project_activity()
@@ -61,7 +73,6 @@ class ActivityFeedTest extends TestCase
         tap($project->activity->last(), function ($activity) {
             $this->assertEquals('completed_task', $activity->description);
             $this->assertInstanceOf(Task::class, $activity->subject);
-            $this->assertEquals('Some task', $activity->subject->body);
         });
     }
 

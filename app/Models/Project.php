@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Project extends Model
 {
     use HasFactory;
 
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
     protected $guarded = [];
+
+    public array $old = [];
 
     public function path()
     {
@@ -50,6 +59,19 @@ class Project extends Model
      */
     public function recordActivity(string $description)
     {
-        $this->activity()->create(['description' => $description]);
+        $this->activity()->create([
+            'description' => $description,
+            'changes' => $this->activityChanges($description)
+        ]);
+    }
+
+    protected function activityChanges($description)
+    {
+        if ($description === 'updated') {
+            return [
+                'before' => Arr::except(array_diff($this->old, $this->getAttributes()), ['updated_at']),
+                'after' => Arr::except($this->getChanges(), ['updated_at'])
+            ];
+        }
     }
 }
