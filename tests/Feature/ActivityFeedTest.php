@@ -20,7 +20,7 @@ class ActivityFeedTest extends TestCase
         $project = Project::factory()->create();
 
         $this->assertCount(1, $project->activity);
-        $this->assertEquals('created', $project->activity[0]->description);
+        $this->assertEquals('created_project', $project->activity[0]->description);
     }
 
     public function test_updating_a_project_generates_activity()
@@ -33,7 +33,7 @@ class ActivityFeedTest extends TestCase
         $this->assertCount(2, $project->activity);
 
         tap($project->activity->last(), function ($activity) use ($originalTitle){
-            $this->assertEquals('updated', $activity->description);
+            $this->assertEquals('updated_project', $activity->description);
 
             $expected = [
                 'before' => ['title' => $originalTitle],
