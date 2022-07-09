@@ -50,10 +50,17 @@
         public function recordActivity(string $description)
         {
             $this->activity()->create([
+                'user_id' => $this->activityOwner()->id,
                 'description' => $description,
                 'changes' => $this->activityChanges(),
                 'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project->id
             ]);
+        }
+
+        protected function activityOwner()
+        {
+
+            return ($this->project ?? $this)->owner;
         }
 
         protected function activityChanges()
