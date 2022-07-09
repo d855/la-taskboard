@@ -39,7 +39,7 @@
          */
         public static function recordableEvents(): array
         {
-            return $recordableEvents = static::$recordableEvents ?? ['created', 'updated', 'deleted'];
+            return $recordableEvents = static::$recordableEvents ?? ['created', 'updated'];
         }
 
         /**

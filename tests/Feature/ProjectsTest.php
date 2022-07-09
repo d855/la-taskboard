@@ -63,6 +63,25 @@
 
         }
 
+        public function test_a_user_can_delete_a_project()
+        {
+            $this->withoutExceptionHandling();
+
+            $project = Project::factory()->create();
+            $this->actingAs($project->owner)->delete($project->path())->assertRedirect('/projects');
+            $this->assertDatabaseMissing('projects', $project->only('id'));
+        }
+
+        public function test_unauthorized_users_cannot_delete_projects()
+        {
+            $project = Project::factory()->create();
+            $this->delete($project->path())->assertRedirect('/login');
+
+            $this->signIn();
+
+            $this->delete($project->path())->assertStatus(403);
+        }
+
         public function test_a_project_requires_a_title()
         {
             $this->signIn();

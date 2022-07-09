@@ -55,6 +55,7 @@
         Route::get('/projects/{project}/edit', [ProjectsController::class, 'edit'])->name('projects.edit');
         Route::patch('/projects/{project}', [ProjectsController::class, 'update'])->name('projects.update');
         Route::post('/projects', [ProjectsController::class, 'store']);
+        Route::delete('projects/{project}', [ProjectsController::class, 'destroy'])->name('projects.destroy');
 
         Route::post('/projects/{project}/tasks', [ProjectTasksController::class, 'store']);
         Route::patch('/projects/{project}/tasks/{task}', [ProjectTasksController::class, 'update']);

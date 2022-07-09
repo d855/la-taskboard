@@ -62,4 +62,13 @@
             return redirect($project->path());
         }
 
+        public function destroy(Project $project)
+        {
+            if (auth()->user()->isNot($project->owner)) {
+                abort(403);
+            }
+            $project->delete();
+            return redirect(route('projects'));
+        }
+
     }
