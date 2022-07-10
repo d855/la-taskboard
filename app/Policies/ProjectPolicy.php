@@ -10,18 +10,9 @@ class ProjectPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     public function update(User $user, Project $project)
     {
-        return $user->is($project->owner);
+        return $user->is($project->owner) || $project->members->contains($user);
     }
 }

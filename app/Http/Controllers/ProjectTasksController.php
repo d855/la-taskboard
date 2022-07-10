@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 class ProjectTasksController extends Controller
 {
 
+    /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function store(Project $project)
     {
-        if(auth()->user()->isNot($project->owner)) {
-            abort(403);
-        }
+        $this->authorize('update', $project);
 
         request()->validate(['body' => 'required']);
 
@@ -22,11 +23,12 @@ class ProjectTasksController extends Controller
         return redirect($project->path());
     }
 
+    /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update(Project $project, Task $task)
     {
-        if(auth()->user()->isNot($project->owner)) {
-            abort(403);
-        }
+        $this->authorize('update', $task->project);
 
         $task->update(request()->validate(['body' => 'required']));
 
