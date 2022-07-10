@@ -11,15 +11,16 @@
         public function index()
         {
             return view('projects.index', [
-                'projects' => auth()->user()->projects->sortByDesc('updated_at')
+                'projects' => auth()->user()->accessibleProjects()
             ]);
         }
 
+        /**
+         * @throws \Illuminate\Auth\Access\AuthorizationException
+         */
         public function show(Project $project)
         {
-            if (auth()->user()->isNot($project->owner)) {
-                abort(403);
-            }
+            $this->authorize('update', $project);
 
             return view('projects.show', [
                 'project' => $project

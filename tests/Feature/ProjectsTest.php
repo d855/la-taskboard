@@ -109,6 +109,19 @@
             $this->get($project->path())->assertSee($project->title);
         }
 
+        /** @test */
+        function a_user_can_see_all_projects_they_have_been_invited_on_their_dashboard()
+        {
+            $user = User::factory()->create();
+            $this->signIn($user);
+
+            $project = Project::factory()->create();
+
+            $project->invite($user);
+
+            $this->get('/projects')->assertSee($project->title);
+        }
+
         public function test_an_authenticated_user_cannot_view_the_projects_of_others()
         {
             $this->signIn();
