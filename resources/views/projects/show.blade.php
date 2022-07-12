@@ -1,11 +1,18 @@
 <x-app-layout>
-	<header class="flex justify-between items-end mb-3 py-4">
-		<p class="text-gray-400 font-semibold text-sm capitalize">
-			<a href="{{ route('projects') }}">My projects</a> / {{ $project->title }}
-		</p>
-		<a href="{{ route('projects.edit', $project) }}"
-		   class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ease-in-out duration-150">Edit
-		                                                                                                                    Project</a>
+	<header class="flex items-center mb-3 py-4">
+		<div class="flex justify-between items-end w-full">
+			<p class="text-gray-400 font-semibold text-sm capitalize">
+				<a href="{{ route('projects') }}">My projects</a> / {{ $project->title }}
+			</p>
+			<div class="flex items-center">
+				@foreach($project->members as $member)
+					<img src="{{ gravatar_url($member->email) }}" alt="{{ $member->name }}'s avatar" class="rounded-full w-8 mr-2">
+				@endforeach
+				<a href="{{ route('projects.edit', $project) }}"
+			        class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ml-6 ease-in-out duration-150">Edit
+			                                                                                                                         Project</a>
+			</div>
+		</div>
 	</header>
 
 	<section>
