@@ -8,6 +8,7 @@
     use App\Http\Controllers\Auth\PasswordResetLinkController;
     use App\Http\Controllers\Auth\RegisteredUserController;
     use App\Http\Controllers\Auth\VerifyEmailController;
+    use App\Http\Controllers\ProjectInvitationsController;
     use App\Http\Controllers\ProjectsController;
     use App\Http\Controllers\ProjectTasksController;
     use Illuminate\Support\Facades\Route;
@@ -49,15 +50,27 @@
 
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+
+
+
         Route::get('/projects', [ProjectsController::class, 'index'])->name('projects');
+
         Route::get('/projects/create', [ProjectsController::class, 'create'])->name('projects.create');
+
         Route::get('/projects/{project}', [ProjectsController::class, 'show'])->name('projects.show');
+
         Route::get('/projects/{project}/edit', [ProjectsController::class, 'edit'])->name('projects.edit');
+
         Route::patch('/projects/{project}', [ProjectsController::class, 'update'])->name('projects.update');
+
         Route::post('/projects', [ProjectsController::class, 'store']);
+
         Route::delete('projects/{project}', [ProjectsController::class, 'destroy'])->name('projects.destroy');
 
         Route::post('/projects/{project}/tasks', [ProjectTasksController::class, 'store']);
+
         Route::patch('/projects/{project}/tasks/{task}', [ProjectTasksController::class, 'update']);
+
+        Route::post('/projects/{project}/invitations', [ProjectInvitationsController::class, 'store']);
 
     });
