@@ -6,11 +6,13 @@
 			</p>
 			<div class="flex items-center">
 				@foreach($project->members as $member)
-					<img src="{{ gravatar_url($member->email) }}" alt="{{ $member->name }}'s avatar" class="rounded-full w-8 mr-2">
+					<img src="{{ gravatar_url($member->email) }}"
+					     alt="{{ $member->name }}'s avatar"
+					     class="rounded-full w-8 mr-2">
 				@endforeach
 				<a href="{{ route('projects.edit', $project) }}"
-			        class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ml-6 ease-in-out duration-150">Edit
-			                                                                                                                         Project</a>
+				   class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ml-6 ease-in-out duration-150">Edit
+				                                                                                                                         Project</a>
 			</div>
 		</div>
 	</header>
@@ -68,6 +70,8 @@
 							Save
 						</button>
 					</form>
+
+					@include('errors')
 				</div>
 			</div>
 
@@ -84,6 +88,22 @@
 						@endforeach
 					</ul>
 				</div>
+
+				@can('manage', $project)
+					<div class="bg-white flex flex-col justify-start rounded-lg shadow mt-5 p-5 cursor-pointer hover:shadow-lg transition ease-in-out duration-250">
+						<h3 class="font-normal text-xl py-4 border-l-4 border-cyan-400 -ml-5 pl-4">Invite a User</h3>
+
+						<form action="{{ $project->path() . '/invitations' }}" method="POST">
+							@csrf
+
+							<div class="mb-3">
+								<input type="email" name="email" class="border border-gray-300 rounded w-full" placeholder="Email address">
+							</div>
+							<button type="submit" class="bg-cyan-400 text-white py-2 px-4 shadow hover:bg-cyan-500 rounded-md transition ml-6 ease-in-out duration-150">Invite</button>
+						</form>
+						@include('errors', ['bag' => 'invitations'])
+					</div>
+				@endcan
 			</div>
 		</div>
 	</section>

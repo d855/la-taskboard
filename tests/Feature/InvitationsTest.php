@@ -17,8 +17,17 @@ class InvitationsTest extends TestCase
     /** @test */
     function non_owners_may_not_invite_users()
     {
-        $this->actingAs(User::factory()->create())
-             ->post(Project::factory()->create()->path() . '/invitations')
+        $user = User::factory()->create();
+        $project = Project::factory()->create();
+
+        $this->actingAs($user)
+             ->post($project->path() . '/invitations')
+             ->assertStatus(403);
+
+        $project->invite($user);
+
+        $this->actingAs($user)
+             ->post($project->path() . '/invitations')
              ->assertStatus(403);
 
     }
@@ -44,7 +53,7 @@ class InvitationsTest extends TestCase
             'email' => 'notauser@example.com'
         ])->assertSessionHasErrors([
             'email' => 'The user you are inviting must have a TaskBoard account'
-        ]);
+        ], null, 'invitations');
     }
 
         /** @test */

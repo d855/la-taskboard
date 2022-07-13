@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ProjectInvitationsController extends Controller
 {
-    
+
     public function store(Project $project, ProjectInvitationRequest $request)
     {
         $user = User::whereEmail(request('email'))->first();
