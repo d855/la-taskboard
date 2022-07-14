@@ -77,9 +77,14 @@
             $project = Project::factory()->create();
             $this->delete($project->path())->assertRedirect('/login');
 
-            $this->signIn();
+            $user = User::factory()->create();
+            $this->signIn($user);
 
             $this->delete($project->path())->assertStatus(403);
+
+            $project->invite($user);
+
+            $this->actingAs($user)->delete($project->path())->assertStatus(403);
         }
 
         public function test_a_project_requires_a_title()
