@@ -1,7 +1,7 @@
 import './bootstrap';
+import { createApp } from "vue";
+import ThemeSwitcher from "./Components/ThemeSwitcher";
 
-import Alpine from 'alpinejs';
-
-window.Alpine = Alpine;
-
-Alpine.start();
+const app = createApp({})
+app.component('theme-switcher', ThemeSwitcher)
+app.mount('#app');
